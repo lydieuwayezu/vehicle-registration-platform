@@ -10,11 +10,7 @@
  * Zod lets us describe the shape and rules of our data as JavaScript objects.
  * React Hook Form then uses these schemas (via @hookform/resolvers/zod) to
  * automatically validate each field and produce error messages.
- *
- * EXPORTS:
- * - vehicleInfoSchema   → validates Step 1 (vehicle details)
- * - ownerSchema         → validates Step 2 (owner details, with conditional rules)
- * - regInsuranceSchema  → validates Step 3 (registration & insurance details)
+ 
  */
 
 import { z } from 'zod';

@@ -1,27 +1,3 @@
-/**
- * FILE: src/services/api.js
- *
- * KEY FUNCTIONALITY:
- * This is the centralized API utility for the entire application.
- * It creates a single Axios instance configured with the backend base URL
- * and exports one function for every API endpoint the app needs.
- *
- * WHY THIS FILE EXISTS:
- * Instead of writing axios.get(...) scattered across every component,
- * all API calls live here. If the base URL ever changes, you only update
- * one line in this file and everything else keeps working.
- *
- * EXPORTS:
- * - getVehicles()              → GET  /vehicle           (fetch all vehicles)
- * - getVehicle(id)             → GET  /vehicle/:id       (fetch one vehicle)
- * - getVehicleInfo(id)         → GET  /vehicle/:id/info  (vehicle info tab)
- * - getVehicleOwner(id)        → GET  /vehicle/:id/owner (owner tab)
- * - getVehicleRegistration(id) → GET  /vehicle/:id/registration
- * - getVehicleInsurance(id)    → GET  /vehicle/:id/insurance
- * - createVehicle(data)        → POST /vehicle           (register new vehicle)
- * - updateVehicle(id, data)    → PUT  /vehicle/:id       (edit vehicle)
- * - deleteVehicle(id)          → DELETE /vehicle/:id     (delete vehicle)
- */
 
 import axios from 'axios';
 
