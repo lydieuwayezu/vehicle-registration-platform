@@ -25,6 +25,7 @@ export default function EditVehicle() {
   const queryClient = useQueryClient();
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState(null);
+  const [serverError, setServerError] = useState('');
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['vehicle', id],
@@ -44,6 +45,8 @@ export default function EditVehicle() {
     }
   }, [data]);
 
+  const [serverError, setServerError] = useState('');
+
   const mutation = useMutation({
     mutationFn: (payload) => updateVehicle(id, payload),
     onSuccess: () => {
@@ -53,12 +56,13 @@ export default function EditVehicle() {
       navigate(`/vehicle/${id}`);
     },
     onError: (err) => {
-      const errors = err?.response?.data?.errors;
-      if (Array.isArray(errors)) {
-        errors.forEach(e => toast.error(e.message ?? String(e)));
-      } else {
-        toast.error(err?.response?.data?.message ?? 'Update failed.');
-      }
+      const data = err?.response?.data;
+      const msg = Array.isArray(data?.errors)
+        ? data.errors.join('\n')
+        : (data?.error ?? data?.message ?? 'Update failed.');
+      msg.split('\n').forEach(line => toast.error(line, { duration: 6000 }));
+      setServerError(msg);
+      setStep(2);
     },
   });
 
@@ -71,6 +75,7 @@ export default function EditVehicle() {
   );
 
   const handleNext = (stepData) => {
+    setServerError('');
     setFormData(prev => ({ ...prev, ...stepData }));
     setStep(s => s + 1);
   };
@@ -84,6 +89,19 @@ export default function EditVehicle() {
             <span>{i + 1}</span> {label}
           </div>
         ))}
+      </div>
+
+      {serverError && (
+        <div className="error-banner" style={{ marginBottom: '1rem' }}>
+          <strong>Update failed:</strong>
+          <ul style={{ margin: '0.5rem 0 0 1rem', padding: 0 }}>
+            {serverError.split('\n').map((line, i) => <li key={i}>{line}</li>)}
+          </ul>
+          <small style={{ display: 'block', marginTop: '0.5rem' }}>
+            ⚠️ Plate number, national ID, email, and mobile must be unique across all vehicles.
+          </small>
+        </div>
+      )}
       </div>
       {step === 0 && <Step1VehicleInfo defaultValues={formData} onNext={handleNext} />}
       {step === 1 && <Step2Owner defaultValues={formData} onNext={handleNext} onBack={() => setStep(s => s - 1)} />}
