@@ -14,6 +14,7 @@ export default function Step1VehicleInfo({ defaultValues, onNext }) {
     defaultValues,
     mode: 'onBlur',
   });
+  
 
   return (
     <form onSubmit={handleSubmit(onNext)} className="step-form">

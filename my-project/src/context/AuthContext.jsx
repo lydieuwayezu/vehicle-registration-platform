@@ -64,9 +64,4 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
-
-// ─── CUSTOM HOOK ──────────────────────────────────────────────────────────────
-// useAuth() is a shortcut so components don't need to import both
-// useContext and AuthContext — they just call useAuth() instead.
-// Usage: const { isAuthenticated, login, logout } = useAuth();
 export const useAuth = () => useContext(AuthContext);
