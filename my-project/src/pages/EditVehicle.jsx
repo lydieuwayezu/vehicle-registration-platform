@@ -45,8 +45,6 @@ export default function EditVehicle() {
     }
   }, [data]);
 
-  const [serverError, setServerError] = useState('');
-
   const mutation = useMutation({
     mutationFn: (payload) => updateVehicle(id, payload),
     onSuccess: () => {
@@ -102,7 +100,6 @@ export default function EditVehicle() {
           </small>
         </div>
       )}
-      </div>
       {step === 0 && <Step1VehicleInfo defaultValues={formData} onNext={handleNext} />}
       {step === 1 && <Step2Owner defaultValues={formData} onNext={handleNext} onBack={() => setStep(s => s - 1)} />}
       {step === 2 && (
